@@ -7,9 +7,9 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
 import { FaSearch, FaPlay, FaHeart, FaList, FaHistory, FaRadio } from 'react-icons/fa';
-import { useAuth } from '../../../hooks/useAuth';
-import { usePlayer } from '../../../hooks/usePlayer';
-import { useDebounce } from '../../../hooks/useDebounce';
+import { useAuth } from '../../hooks/useAuth';
+import { usePlayer } from '../../hooks/usePlayer';
+import { useDebounce } from '../../hooks/useDebounce';
 
 // We'll create these components next
 import GlassCard from '../../components/ui/GlassCard';
