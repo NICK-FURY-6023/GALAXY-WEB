@@ -300,8 +300,8 @@ export default function MusicHub() {
 
         </div>
 
-        {/* Global Player Bar - We'll implement this component next */}
-        {/* <PlayerBar /> */}
+        {/* Global Player Bar */}
+        <PlayerBar />
       </div>
     </>
   );
