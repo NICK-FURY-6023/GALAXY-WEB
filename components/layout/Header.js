@@ -34,6 +34,7 @@ export default function Header() {
     // Har link ke liye alag color aur naya icon
     const navLinks = [
         { name: 'Home', href: '/', color: 'text-blue-500', bgColor: 'bg-blue-500', icon: <FaHome /> },
+        { name: 'Music', href: '/music', color: 'text-purple-400', bgColor: 'bg-purple-400', icon: <FaMusic /> },
         { name: 'About', href: '/about', color: 'text-green-500', bgColor: 'bg-green-500', icon: <FaInfoCircle /> },
         { name: 'Commands', href: '/commands', color: 'text-purple-500', bgColor: 'bg-purple-500', icon: <FaList /> },
         { name: 'Support', href: 'https://discord.gg/U4kN6ZJyMt', color: 'text-orange-500', bgColor: 'bg-orange-500', icon: <FaHeadset />, isExternal: true },
