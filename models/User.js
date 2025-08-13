@@ -62,6 +62,19 @@ const userSchema = new mongoose.Schema({
       default: false,
     },
   },
+  favorites: {
+    tracks: [{
+      trackId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Track',
+        required: true,
+      },
+      addedAt: {
+        type: Date,
+        default: Date.now,
+      },
+    }]
+  },
   createdAt: {
     type: Date,
     default: Date.now,
