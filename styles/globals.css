@@ -1,0 +1,62 @@
+/* styles/globals.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ... (body, h1, glass-card styles same) ... */
+body {
+  @apply bg-light-bg text-gray-800 dark:bg-dark-bg dark:text-gray-200 transition-colors duration-500;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Orbitron', sans-serif;
+}
+
+.glass-card {
+  @apply bg-light-card dark:bg-dark-card backdrop-blur-xl border border-white/10 rounded-2xl shadow-lg;
+}
+
+
+/* --- 3D Bubble Button Style (FIXED) --- */
+.bubble-btn {
+    @apply px-4 py-2 rounded-full font-semibold transition-all duration-300 ease-in-out;
+    background: #e0e0e0;
+    box-shadow: 4px 4px 8px #bebebe, -4px -4px 8px #ffffff;
+    /* color: #555555; <-- YAHAN SE COLOR HATA DIYA HAI */
+}
+
+.bubble-btn:hover {
+    @apply scale-105;
+}
+
+.bubble-btn:active {
+    transform: scale(0.95);
+    box-shadow: inset 4px 4px 8px #bebebe, inset -4px -4px 8px #ffffff;
+}
+
+/* Dark Mode Styles for Bubble Button */
+.dark .bubble-btn {
+    background: #1e1e1e;
+    box-shadow: 4px 4px 8px #121212, -4px -4px 8px #2c2c2c;
+    /* color: #cccccc; <-- YAHAN SE BHI COLOR HATA DIYA HAI */
+}
+
+.dark .bubble-btn:active {
+    box-shadow: inset 4px 4px 8px #121212, inset -4px -4px 8px #2c2c2c;
+}
+
+.bubble-btn.invite {
+    @apply text-white;
+    background: #111827;
+}
+
+.dark .bubble-btn.invite {
+    @apply text-black shadow-glow;
+    background: #FFFFFF;
+}
+
+/* ... (scrollbar styles same) ... */
