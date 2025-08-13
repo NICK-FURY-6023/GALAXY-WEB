@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 // Icons import kiye hain
-import { FaHome, FaInfoCircle, FaList, FaHeadset, FaBars, FaTimes } from 'react-icons/fa';
+import { FaHome, FaInfoCircle, FaList, FaHeadset, FaBars, FaTimes, FaMusic } from 'react-icons/fa';
 
 // Mobile menu NavLink
 const MobileNavLink = ({ href, children, onClick, color }) => (
