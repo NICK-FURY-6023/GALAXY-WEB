@@ -193,38 +193,36 @@ export default function MusicHub() {
                   Search Results for "{searchResults.query}"
                 </h2>
                 
-                {/* We'll implement SearchResults component next */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {Object.entries(searchResults.results).map(([source, tracks]) => (
-                    tracks.length > 0 && (
-                      <div key={source} className="space-y-2">
-                        <h3 className="font-semibold text-lg capitalize text-purple-400">
-                          {source} ({tracks.length})
-                        </h3>
-                        <div className="space-y-2">
-                          {tracks.slice(0, 3).map((track, index) => (
-                            <div key={`${source}-${index}`} className="p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
-                              <div className="flex items-center gap-3">
-                                {track.thumbnailUrl && (
-                                  <img 
-                                    src={track.thumbnailUrl} 
-                                    alt={track.title}
-                                    className="w-12 h-12 rounded-lg object-cover"
-                                  />
-                                )}
-                                <div className="flex-1 min-w-0">
-                                  <p className="font-medium truncate">{track.title}</p>
-                                  <p className="text-sm text-gray-400 truncate">{track.artist}</p>
-                                </div>
-                                <FaPlay className="text-purple-400 hover:text-purple-300 transition-colors" />
-                              </div>
-                            </div>
-                          ))}
-                        </div>
+                {Object.entries(searchResults.results).map(([source, tracks]) => (
+                  tracks.length > 0 && (
+                    <div key={source} className="mb-8">
+                      <h3 className="font-semibold text-xl mb-4 capitalize text-purple-400 flex items-center gap-2">
+                        {source} ({tracks.length} results)
+                      </h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {tracks.slice(0, 6).map((track, index) => (
+                          <TrackCard 
+                            key={`${source}-${track.sid || index}`} 
+                            track={track} 
+                            variant="compact" 
+                          />
+                        ))}
                       </div>
-                    )
-                  ))}
-                </div>
+                      {tracks.length > 6 && (
+                        <button className="mt-3 text-purple-400 hover:text-purple-300 text-sm">
+                          Show {tracks.length - 6} more {source} results
+                        </button>
+                      )}
+                    </div>
+                  )
+                ))}
+
+                {searchResults.totalResults === 0 && (
+                  <div className="text-center py-8">
+                    <p className="text-gray-400 text-lg">No results found for "{searchResults.query}"</p>
+                    <p className="text-gray-500 text-sm mt-2">Try different keywords or check your spelling</p>
+                  </div>
+                )}
               </GlassCard>
             </motion.div>
           )}
