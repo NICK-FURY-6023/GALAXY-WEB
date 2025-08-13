@@ -13,6 +13,8 @@ import { useDebounce } from '../../hooks/useDebounce';
 
 // We'll create these components next
 import GlassCard from '../../components/ui/GlassCard';
+import TrackCard from '../../components/music/TrackCard';
+import PlayerBar from '../../components/music/PlayerBar';
 // import SearchResults from '../../components/music/SearchResults';
 // import PlayerBar from '../../components/music/PlayerBar';
 
