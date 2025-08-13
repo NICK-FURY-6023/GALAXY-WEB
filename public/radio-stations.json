@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Lofi Hip Hop Radio",
+    "url": "https://www.youtube.com/watch?v=jfKfPfyJRdk",
+    "genre": "Lo-Fi",
+    "country": "International",
+    "description": "24/7 chill beats to relax/study to",
+    "thumbnailUrl": "https://i.ytimg.com/vi/jfKfPfyJRdk/mqdefault.jpg"
+  },
+  {
+    "name": "Jazz Café Radio",
+    "url": "https://jazz-icy.ice.infomaniak.ch/jazz-icy.mp3",
+    "genre": "Jazz",
+    "country": "International",
+    "bitrate": 128,
+    "description": "Smooth jazz for relaxation and focus"
+  },
+  {
+    "name": "Chillhop Radio",
+    "url": "https://streams.fluxfm.de/Chillhop/mp3-320/streams.fluxfm.de/",
+    "genre": "Chillhop",
+    "country": "International",
+    "bitrate": 320,
+    "description": "The perfect soundtrack for coding and creativity"
+  },
+  {
+    "name": "Electronic Dance Music",
+    "url": "https://streams.ilovemusic.de/iloveradio104.mp3",
+    "genre": "Electronic",
+    "country": "Germany",
+    "bitrate": 128,
+    "description": "High-energy electronic beats"
+  },
+  {
+    "name": "Classic Rock Radio",
+    "url": "https://streams.radiobob.de/bob-classicrock/mp3-192/streams.radiobob.de/",
+    "genre": "Rock",
+    "country": "Germany",
+    "bitrate": 192,
+    "description": "The greatest rock hits of all time"
+  },
+  {
+    "name": "Ambient Space",
+    "url": "https://uk7.internet-radio.com:8226/live",
+    "genre": "Ambient",
+    "country": "UK",
+    "bitrate": 128,
+    "description": "Atmospheric soundscapes for deep focus"
+  },
+  {
+    "name": "Hip Hop Central",
+    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/TLPSTR18.mp3",
+    "genre": "Hip Hop",
+    "country": "USA",
+    "bitrate": 128,
+    "description": "The hottest hip hop tracks 24/7"
+  },
+  {
+    "name": "Indie Rock Station",
+    "url": "https://streams.radiobob.de/bob-indie/mp3-192/streams.radiobob.de/",
+    "genre": "Indie",
+    "country": "Germany",
+    "bitrate": 192,
+    "description": "Independent rock from around the world"
+  },
+  {
+    "name": "Classical Essentials",
+    "url": "https://direct.fipradio.fr/live/fip-midfi.mp3",
+    "genre": "Classical",
+    "country": "France",
+    "bitrate": 128,
+    "description": "Timeless classical masterpieces"
+  },
+  {
+    "name": "Synthwave Retro",
+    "url": "https://edge.audio.funradio.fr/fun-1-44-128",
+    "genre": "Synthwave",
+    "country": "France",
+    "bitrate": 128,
+    "description": "80s-inspired electronic music"
+  }
+]
