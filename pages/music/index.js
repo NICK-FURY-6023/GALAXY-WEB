@@ -188,17 +188,27 @@ export default function MusicHub() {
       <div className="min-h-screen px-4 py-20 pb-32"> {/* Extra bottom padding for player bar */}
         <div className="container mx-auto max-w-6xl">
           
-          {/* Header Section */}
+          {/* Header Section with 3D Logo */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-12"
           >
+            {/* Compact 3D Logo */}
+            <VenaLogo3D 
+              width={192} 
+              height={192} 
+              className="mx-auto mb-6"
+              showBackground={false}
+            />
+            
             <h1 className="text-4xl md:text-5xl font-black uppercase text-primary dark:text-primary-dark mb-4">
-              Welcome back, {user.displayName}
+              <span className="bg-gradient-to-r from-purple-400 via-green-400 to-blue-400 bg-clip-text text-transparent">
+                Welcome back, {user.displayName}
+              </span>
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-300">
-              Discover and stream music from your favorite sources
+              Discover and stream music from your favorite sources with immersive 3D visuals
             </p>
           </motion.div>
 
