@@ -11,11 +11,22 @@ import { useAuth } from '../../hooks/useAuth';
 import { usePlayer } from '../../hooks/usePlayer';
 import { useDebounce } from '../../hooks/useDebounce';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
 // We'll create these components next
 import GlassCard from '../../components/ui/GlassCard';
 import TrackCard from '../../components/music/TrackCard';
 import PlayerBar from '../../components/music/PlayerBar';
+
+// Dynamic imports
+const VenaLogo3D = dynamic(() => import('../../components/veynova/VenaLogo3D'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-48 h-48 mx-auto mb-6 flex items-center justify-center bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-2xl">
+      <div className="text-4xl text-purple-400">🎵</div>
+    </div>
+  )
+});
 // import SearchResults from '../../components/music/SearchResults';
 // import PlayerBar from '../../components/music/PlayerBar';
 
