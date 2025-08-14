@@ -58,6 +58,41 @@ export default function MusicHub() {
     }
   };
 
+  // Helper functions for API key checking and source display
+  const checkApiKeyAvailable = (source) => {
+    // These would normally check environment variables
+    // For now, return true for Deezer and Radio (public APIs)
+    return source === 'deezer' || source === 'radio';
+  };
+
+  const getSourceDisplayName = (source) => {
+    const names = {
+      youtube: 'YouTube',
+      spotify: 'Spotify',
+      soundcloud: 'SoundCloud',
+      deezer: 'Deezer',
+      radio: 'Radio'
+    };
+    return names[source] || source;
+  };
+
+  const getSourceColor = (source) => {
+    const colors = {
+      youtube: 'text-red-400',
+      spotify: 'text-green-400',
+      soundcloud: 'text-orange-400',
+      deezer: 'text-pink-400',
+      radio: 'text-blue-400'
+    };
+    return colors[source] || 'text-purple-400';
+  };
+
+  const showMockResults = (source) => {
+    // This would show demo/mock results for the source
+    console.log(`Showing mock results for ${source}`);
+    // TODO: Implement mock results display
+  };
+
   // If user is not logged in, show login options
   if (!user) {
     return (
