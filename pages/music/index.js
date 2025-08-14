@@ -309,29 +309,37 @@ export default function MusicHub() {
             transition={{ delay: 0.4 }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
           >
-            <GlassCard className="p-6 text-center hover:scale-105 transition-transform cursor-pointer">
-              <FaHeart className="text-4xl text-red-400 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">Favorites</h3>
-              <p className="text-gray-400">Your liked songs</p>
-            </GlassCard>
+            <Link href="/music/favorites">
+              <GlassCard className="p-6 text-center hover:scale-105 transition-transform cursor-pointer">
+                <FaHeart className="text-4xl text-red-400 mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">Favorites</h3>
+                <p className="text-gray-400">Your liked songs</p>
+              </GlassCard>
+            </Link>
 
-            <GlassCard className="p-6 text-center hover:scale-105 transition-transform cursor-pointer">
-              <FaList className="text-4xl text-green-400 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">Playlists</h3>
-              <p className="text-gray-400">Custom collections</p>
-            </GlassCard>
+            <Link href="/music/playlists">
+              <GlassCard className="p-6 text-center hover:scale-105 transition-transform cursor-pointer">
+                <FaList className="text-4xl text-green-400 mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">Playlists</h3>
+                <p className="text-gray-400">Custom collections</p>
+              </GlassCard>
+            </Link>
 
-            <GlassCard className="p-6 text-center hover:scale-105 transition-transform cursor-pointer">
-              <FaHistory className="text-4xl text-blue-400 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">History</h3>
-              <p className="text-gray-400">Recently played</p>
-            </GlassCard>
+            <Link href="/music/history">
+              <GlassCard className="p-6 text-center hover:scale-105 transition-transform cursor-pointer">
+                <FaHistory className="text-4xl text-blue-400 mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">History</h3>
+                <p className="text-gray-400">Recently played</p>
+              </GlassCard>
+            </Link>
 
-            <GlassCard className="p-6 text-center hover:scale-105 transition-transform cursor-pointer">
-              <FaRadio className="text-4xl text-yellow-400 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">Radio</h3>
-              <p className="text-gray-400">Live stations</p>
-            </GlassCard>
+            <Link href="/music/radio">
+              <GlassCard className="p-6 text-center hover:scale-105 transition-transform cursor-pointer">
+                <FaRadio className="text-4xl text-yellow-400 mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">Radio</h3>
+                <p className="text-gray-400">Live stations</p>
+              </GlassCard>
+            </Link>
           </motion.div>
 
           {/* Currently Playing Section (if any) */}
