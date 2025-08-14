@@ -350,9 +350,17 @@ export default function MusicHub() {
               className="mb-12"
             >
               <GlassCard className="p-6">
-                <h2 className="text-2xl font-bold mb-4 text-primary dark:text-primary-dark">
-                  Now Playing
-                </h2>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-2xl font-bold text-primary dark:text-primary-dark">
+                    Now Playing
+                  </h2>
+                  <Link 
+                    href="/music/now"
+                    className="text-purple-400 hover:text-purple-300 text-sm underline"
+                  >
+                    View Full Player
+                  </Link>
+                </div>
                 <div className="flex items-center gap-4">
                   {current.thumbnailUrl && (
                     <img 
