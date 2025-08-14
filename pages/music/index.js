@@ -10,6 +10,7 @@ import { FaSearch, FaPlay, FaHeart, FaList, FaHistory, FaRadio } from 'react-ico
 import { useAuth } from '../../hooks/useAuth';
 import { usePlayer } from '../../hooks/usePlayer';
 import { useDebounce } from '../../hooks/useDebounce';
+import Link from 'next/link';
 
 // We'll create these components next
 import GlassCard from '../../components/ui/GlassCard';
