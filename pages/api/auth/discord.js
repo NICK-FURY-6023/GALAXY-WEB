@@ -1,32 +1,28 @@
 /**
- * Discord OAuth initiation endpoint
+ * Discord OAuth2 Login Endpoint
  */
-
-const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
 export default function handler(req, res) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  if (!DISCORD_CLIENT_ID) {
-    return res.status(500).json({ 
-      error: 'Discord OAuth not configured. Please set DISCORD_CLIENT_ID in environment variables.' 
-    });
+  const discordClientId = process.env.DISCORD_CLIENT_ID;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  
+  if (!discordClientId) {
+    return res.status(500).json({ error: 'Discord client ID not configured' });
   }
 
-  const redirectUri = `${BASE_URL}/api/auth/callback`;
-  const scope = 'identify email';
-  const state = `discord:${Date.now()}`;
+  // Discord OAuth2 scopes
+  const scopes = ['identify', 'guilds'].join('%20');
+  
+  // Redirect URL
+  const redirectUri = encodeURIComponent(`${baseUrl}/api/auth/discord/callback`);
+  
+  // Discord OAuth2 authorization URL
+  const discordAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${discordClientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scopes}`;
 
-  const discordAuthUrl = 
-    `https://discord.com/api/oauth2/authorize?` +
-    `client_id=${DISCORD_CLIENT_ID}&` +
-    `redirect_uri=${encodeURIComponent(redirectUri)}&` +
-    `response_type=code&` +
-    `scope=${encodeURIComponent(scope)}&` +
-    `state=${state}`;
-
-  res.redirect(302, discordAuthUrl);
+  // Redirect to Discord
+  res.redirect(discordAuthUrl);
 }

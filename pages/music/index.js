@@ -10,11 +10,23 @@ import { FaSearch, FaPlay, FaHeart, FaList, FaHistory, FaRadio } from 'react-ico
 import { useAuth } from '../../hooks/useAuth';
 import { usePlayer } from '../../hooks/usePlayer';
 import { useDebounce } from '../../hooks/useDebounce';
+import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
 // We'll create these components next
 import GlassCard from '../../components/ui/GlassCard';
 import TrackCard from '../../components/music/TrackCard';
 import PlayerBar from '../../components/music/PlayerBar';
+
+// Dynamic imports
+const VenaLogo3D = dynamic(() => import('../../components/veynova/VenaLogo3D'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-48 h-48 mx-auto mb-6 flex items-center justify-center bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-2xl">
+      <div className="text-4xl text-purple-400">🎵</div>
+    </div>
+  )
+});
 // import SearchResults from '../../components/music/SearchResults';
 // import PlayerBar from '../../components/music/PlayerBar';
 
@@ -56,6 +68,41 @@ export default function MusicHub() {
     } finally {
       setIsSearching(false);
     }
+  };
+
+  // Helper functions for API key checking and source display
+  const checkApiKeyAvailable = (source) => {
+    // These would normally check environment variables
+    // For now, return true for Deezer and Radio (public APIs)
+    return source === 'deezer' || source === 'radio';
+  };
+
+  const getSourceDisplayName = (source) => {
+    const names = {
+      youtube: 'YouTube',
+      spotify: 'Spotify',
+      soundcloud: 'SoundCloud',
+      deezer: 'Deezer',
+      radio: 'Radio'
+    };
+    return names[source] || source;
+  };
+
+  const getSourceColor = (source) => {
+    const colors = {
+      youtube: 'text-red-400',
+      spotify: 'text-green-400',
+      soundcloud: 'text-orange-400',
+      deezer: 'text-pink-400',
+      radio: 'text-blue-400'
+    };
+    return colors[source] || 'text-purple-400';
+  };
+
+  const showMockResults = (source) => {
+    // This would show demo/mock results for the source
+    console.log(`Showing mock results for ${source}`);
+    // TODO: Implement mock results display
   };
 
   // If user is not logged in, show login options
@@ -141,17 +188,27 @@ export default function MusicHub() {
       <div className="min-h-screen px-4 py-20 pb-32"> {/* Extra bottom padding for player bar */}
         <div className="container mx-auto max-w-6xl">
           
-          {/* Header Section */}
+          {/* Header Section with 3D Logo */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-12"
           >
+            {/* Compact 3D Logo */}
+            <VenaLogo3D 
+              width={192} 
+              height={192} 
+              className="mx-auto mb-6"
+              showBackground={false}
+            />
+            
             <h1 className="text-4xl md:text-5xl font-black uppercase text-primary dark:text-primary-dark mb-4">
-              Welcome back, {user.displayName}
+              <span className="bg-gradient-to-r from-purple-400 via-green-400 to-blue-400 bg-clip-text text-transparent">
+                Welcome back, {user.displayName}
+              </span>
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-300">
-              Discover and stream music from your favorite sources
+              Discover and stream music from your favorite sources with immersive 3D visuals
             </p>
           </motion.div>
 
@@ -193,34 +250,73 @@ export default function MusicHub() {
                   Search Results for "{searchResults.query}"
                 </h2>
                 
-                {Object.entries(searchResults.results).map(([source, tracks]) => (
-                  tracks.length > 0 && (
+                {/* Source Results */}
+                {['deezer', 'youtube', 'spotify', 'soundcloud', 'radio'].map(source => {
+                  const tracks = searchResults.results[source] || [];
+                  const hasApiKey = checkApiKeyAvailable(source);
+                  
+                  return (
                     <div key={source} className="mb-8">
-                      <h3 className="font-semibold text-xl mb-4 capitalize text-purple-400 flex items-center gap-2">
-                        {source} ({tracks.length} results)
+                      <h3 className="font-semibold text-xl mb-4 capitalize flex items-center gap-2">
+                        <span className={getSourceColor(source)}>
+                          {getSourceDisplayName(source)}
+                        </span>
+                        {tracks.length > 0 && (
+                          <span className="text-gray-400">({tracks.length} results)</span>
+                        )}
                       </h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {tracks.slice(0, 6).map((track, index) => (
-                          <TrackCard 
-                            key={`${source}-${track.sid || index}`} 
-                            track={track} 
-                            variant="compact" 
-                          />
-                        ))}
-                      </div>
-                      {tracks.length > 6 && (
-                        <button className="mt-3 text-purple-400 hover:text-purple-300 text-sm">
-                          Show {tracks.length - 6} more {source} results
-                        </button>
-                      )}
+                      
+                      {!hasApiKey && source !== 'deezer' && source !== 'radio' ? (
+                        <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center">
+                          <div className="text-4xl text-gray-600 mb-3">🔑</div>
+                          <h4 className="font-semibold text-gray-300 mb-2">
+                            {getSourceDisplayName(source)} API Key Required
+                          </h4>
+                          <p className="text-gray-400 text-sm mb-4">
+                            Add your {getSourceDisplayName(source)} API credentials to enable search results from this source.
+                          </p>
+                          <div className="flex flex-col sm:flex-row gap-2 justify-center">
+                            <button className="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors text-sm">
+                              Add API Key
+                            </button>
+                            <button 
+                              onClick={() => showMockResults(source)}
+                              className="px-4 py-2 bg-gray-500/20 text-gray-400 rounded-lg hover:bg-gray-500/30 transition-colors text-sm"
+                            >
+                              Show Demo Results
+                            </button>
+                          </div>
+                        </div>
+                      ) : tracks.length > 0 ? (
+                        <>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {tracks.slice(0, 6).map((track, index) => (
+                              <TrackCard 
+                                key={`${source}-${track.sid || index}`} 
+                                track={track} 
+                                variant="compact" 
+                              />
+                            ))}
+                          </div>
+                          {tracks.length > 6 && (
+                            <button className="mt-3 text-purple-400 hover:text-purple-300 text-sm">
+                              Show {tracks.length - 6} more {source} results
+                            </button>
+                          )}
+                        </>
+                      ) : hasApiKey ? (
+                        <div className="text-center py-4">
+                          <p className="text-gray-500 text-sm">No {source} results found</p>
+                        </div>
+                      ) : null}
                     </div>
-                  )
-                ))}
+                  );
+                })}
 
                 {searchResults.totalResults === 0 && (
                   <div className="text-center py-8">
                     <p className="text-gray-400 text-lg">No results found for "{searchResults.query}"</p>
-                    <p className="text-gray-500 text-sm mt-2">Try different keywords or check your spelling</p>
+                    <p className="text-gray-500 text-sm mt-2">Try different keywords or add more API keys for additional sources</p>
                   </div>
                 )}
               </GlassCard>
@@ -234,29 +330,37 @@ export default function MusicHub() {
             transition={{ delay: 0.4 }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
           >
-            <GlassCard className="p-6 text-center hover:scale-105 transition-transform cursor-pointer">
-              <FaHeart className="text-4xl text-red-400 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">Favorites</h3>
-              <p className="text-gray-400">Your liked songs</p>
-            </GlassCard>
+            <Link href="/music/favorites">
+              <GlassCard className="p-6 text-center hover:scale-105 transition-transform cursor-pointer">
+                <FaHeart className="text-4xl text-red-400 mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">Favorites</h3>
+                <p className="text-gray-400">Your liked songs</p>
+              </GlassCard>
+            </Link>
 
-            <GlassCard className="p-6 text-center hover:scale-105 transition-transform cursor-pointer">
-              <FaList className="text-4xl text-green-400 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">Playlists</h3>
-              <p className="text-gray-400">Custom collections</p>
-            </GlassCard>
+            <Link href="/music/playlists">
+              <GlassCard className="p-6 text-center hover:scale-105 transition-transform cursor-pointer">
+                <FaList className="text-4xl text-green-400 mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">Playlists</h3>
+                <p className="text-gray-400">Custom collections</p>
+              </GlassCard>
+            </Link>
 
-            <GlassCard className="p-6 text-center hover:scale-105 transition-transform cursor-pointer">
-              <FaHistory className="text-4xl text-blue-400 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">History</h3>
-              <p className="text-gray-400">Recently played</p>
-            </GlassCard>
+            <Link href="/music/history">
+              <GlassCard className="p-6 text-center hover:scale-105 transition-transform cursor-pointer">
+                <FaHistory className="text-4xl text-blue-400 mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">History</h3>
+                <p className="text-gray-400">Recently played</p>
+              </GlassCard>
+            </Link>
 
-            <GlassCard className="p-6 text-center hover:scale-105 transition-transform cursor-pointer">
-              <FaRadio className="text-4xl text-yellow-400 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">Radio</h3>
-              <p className="text-gray-400">Live stations</p>
-            </GlassCard>
+            <Link href="/music/radio">
+              <GlassCard className="p-6 text-center hover:scale-105 transition-transform cursor-pointer">
+                <FaRadio className="text-4xl text-yellow-400 mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">Radio</h3>
+                <p className="text-gray-400">Live stations</p>
+              </GlassCard>
+            </Link>
           </motion.div>
 
           {/* Currently Playing Section (if any) */}
@@ -267,9 +371,17 @@ export default function MusicHub() {
               className="mb-12"
             >
               <GlassCard className="p-6">
-                <h2 className="text-2xl font-bold mb-4 text-primary dark:text-primary-dark">
-                  Now Playing
-                </h2>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-2xl font-bold text-primary dark:text-primary-dark">
+                    Now Playing
+                  </h2>
+                  <Link 
+                    href="/music/now"
+                    className="text-purple-400 hover:text-purple-300 text-sm underline"
+                  >
+                    View Full Player
+                  </Link>
+                </div>
                 <div className="flex items-center gap-4">
                   {current.thumbnailUrl && (
                     <img 
