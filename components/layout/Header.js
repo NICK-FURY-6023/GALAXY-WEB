@@ -35,9 +35,10 @@ export default function Header() {
     const navLinks = [
         { name: 'Home', href: '/', color: 'text-blue-500', bgColor: 'bg-blue-500', icon: <FaHome /> },
         { name: 'Music', href: '/music', color: 'text-purple-400', bgColor: 'bg-purple-400', icon: <FaMusic /> },
-        { name: 'About', href: '/about', color: 'text-green-500', bgColor: 'bg-green-500', icon: <FaInfoCircle /> },
-        { name: 'Commands', href: '/commands', color: 'text-purple-500', bgColor: 'bg-purple-500', icon: <FaList /> },
-        { name: 'Support', href: 'https://discord.gg/U4kN6ZJyMt', color: 'text-orange-500', bgColor: 'bg-orange-500', icon: <FaHeadset />, isExternal: true },
+        { name: 'Bot', href: '/bot', color: 'text-green-500', bgColor: 'bg-green-500', icon: <FaHeadset /> },
+        { name: 'About', href: '/about', color: 'text-orange-500', bgColor: 'bg-orange-500', icon: <FaInfoCircle /> },
+        { name: 'Commands', href: '/commands', color: 'text-pink-500', bgColor: 'bg-pink-500', icon: <FaList /> },
+        { name: 'Support', href: 'https://discord.gg/U4kN6ZJyMt', color: 'text-cyan-500', bgColor: 'bg-cyan-500', icon: <FaHeadset />, isExternal: true },
     ];
 
     const botInviteUrl = "https://discord.com/api/oauth2/authorize?client_id=1044596050859663401&permissions=41375902330737&redirect_uri=https%3A%2F%2Fdiscord.gg%2FU4kN6ZJyMt&response_type=code&scope=bot%20applications.commands%20guilds.join%20identify";
