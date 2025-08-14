@@ -193,34 +193,73 @@ export default function MusicHub() {
                   Search Results for "{searchResults.query}"
                 </h2>
                 
-                {Object.entries(searchResults.results).map(([source, tracks]) => (
-                  tracks.length > 0 && (
+                {/* Source Results */}
+                {['deezer', 'youtube', 'spotify', 'soundcloud', 'radio'].map(source => {
+                  const tracks = searchResults.results[source] || [];
+                  const hasApiKey = checkApiKeyAvailable(source);
+                  
+                  return (
                     <div key={source} className="mb-8">
-                      <h3 className="font-semibold text-xl mb-4 capitalize text-purple-400 flex items-center gap-2">
-                        {source} ({tracks.length} results)
+                      <h3 className="font-semibold text-xl mb-4 capitalize flex items-center gap-2">
+                        <span className={getSourceColor(source)}>
+                          {getSourceDisplayName(source)}
+                        </span>
+                        {tracks.length > 0 && (
+                          <span className="text-gray-400">({tracks.length} results)</span>
+                        )}
                       </h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {tracks.slice(0, 6).map((track, index) => (
-                          <TrackCard 
-                            key={`${source}-${track.sid || index}`} 
-                            track={track} 
-                            variant="compact" 
-                          />
-                        ))}
-                      </div>
-                      {tracks.length > 6 && (
-                        <button className="mt-3 text-purple-400 hover:text-purple-300 text-sm">
-                          Show {tracks.length - 6} more {source} results
-                        </button>
-                      )}
+                      
+                      {!hasApiKey && source !== 'deezer' && source !== 'radio' ? (
+                        <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center">
+                          <div className="text-4xl text-gray-600 mb-3">🔑</div>
+                          <h4 className="font-semibold text-gray-300 mb-2">
+                            {getSourceDisplayName(source)} API Key Required
+                          </h4>
+                          <p className="text-gray-400 text-sm mb-4">
+                            Add your {getSourceDisplayName(source)} API credentials to enable search results from this source.
+                          </p>
+                          <div className="flex flex-col sm:flex-row gap-2 justify-center">
+                            <button className="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors text-sm">
+                              Add API Key
+                            </button>
+                            <button 
+                              onClick={() => showMockResults(source)}
+                              className="px-4 py-2 bg-gray-500/20 text-gray-400 rounded-lg hover:bg-gray-500/30 transition-colors text-sm"
+                            >
+                              Show Demo Results
+                            </button>
+                          </div>
+                        </div>
+                      ) : tracks.length > 0 ? (
+                        <>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {tracks.slice(0, 6).map((track, index) => (
+                              <TrackCard 
+                                key={`${source}-${track.sid || index}`} 
+                                track={track} 
+                                variant="compact" 
+                              />
+                            ))}
+                          </div>
+                          {tracks.length > 6 && (
+                            <button className="mt-3 text-purple-400 hover:text-purple-300 text-sm">
+                              Show {tracks.length - 6} more {source} results
+                            </button>
+                          )}
+                        </>
+                      ) : hasApiKey ? (
+                        <div className="text-center py-4">
+                          <p className="text-gray-500 text-sm">No {source} results found</p>
+                        </div>
+                      ) : null}
                     </div>
-                  )
-                ))}
+                  );
+                })}
 
                 {searchResults.totalResults === 0 && (
                   <div className="text-center py-8">
                     <p className="text-gray-400 text-lg">No results found for "{searchResults.query}"</p>
-                    <p className="text-gray-500 text-sm mt-2">Try different keywords or check your spelling</p>
+                    <p className="text-gray-500 text-sm mt-2">Try different keywords or add more API keys for additional sources</p>
                   </div>
                 )}
               </GlassCard>
