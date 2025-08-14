@@ -1,23 +1,33 @@
 // components/layout/Layout.js
+
 import Header from './Header';
 import Footer from './Footer';
-import dynamic from 'next/dynamic'; // <-- dynamic ko import karo
+import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
 
-// CHANGE: SplineScene ko is naye tareeke se import karo
-const SplineScene = dynamic(() => import('../SplineScene'), {
-  ssr: false, // Ye server par render nahi hoga, sirf client par
-  loading: () => null, // Loading ke time kuch mat dikhao
+// Dynamically import WaterBackdrop to avoid SSR issues
+const WaterBackdrop = dynamic(() => import('../veynova/WaterBackdrop'), {
+  ssr: false
 });
 
 export default function Layout({ children }) {
-  return (
-    <div className="relative min-h-screen flex flex-col">
-      <SplineScene />
-      <div className="relative z-10 flex flex-col flex-grow">
-        <Header />
-        <main className="flex-grow">{children}</main>
-        <Footer />
-      </div>
-    </div>
-  );
+    return (
+        <div className="min-h-screen bg-light dark:bg-dark text-text-main-light dark:text-text-main-dark overflow-x-hidden relative">
+            {/* Water/Liquid Motion Backdrop */}
+            <WaterBackdrop intensity={0.6} speed={0.8} />
+            
+            <div className="relative z-10">
+                <Header />
+                <motion.main 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8 }}
+                    className="min-h-screen"
+                >
+                    {children}
+                </motion.main>
+                <Footer />
+            </div>
+        </div>
+    );
 }
